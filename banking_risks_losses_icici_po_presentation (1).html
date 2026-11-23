@@ -1,0 +1,3074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banking Risks &amp; Losses — Sector Case Study</title>
+
+  <!-- Bold High-Legibility Fonts with Instant Offline System Fallbacks (Zero Tailwind CDN) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. ULTRA-HIGH-CONTRAST DAYLIGHT PROJECTOR DESIGN SYSTEM
+       100% pure native CSS for instantaneous offline classroom reliability.
+       Zero dark backgrounds, zero washout pastels, zero low-opacity text.
+       ========================================================================== */
+    :root {
+      --bg-white: #FFFFFF;
+      --card-slate: #F1F5F9;
+      --ink-black: #090D16;
+      --navy: #053C6D;
+      --navy-dark: #03284A;
+      --orange: #D95300;
+      --orange-tint: #FFF3EB;
+      --crimson: #B91C1C;
+      --crimson-tint: #FEF2F2;
+      --emerald: #047857;
+      --emerald-tint: #ECFDF5;
+      --border-heavy: #053C6D;
+      --border-black: #0F172A;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-white);
+      color: var(--ink-black);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ==========================================================================
+       2. CRISP CORPORATE FRAME & CHROME (6PX PROGRESS BAR, CORNER ACCENT, CONTROLS)
+       ========================================================================== */
+    .top-progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background-color: #DBEAFE;
+      z-index: 60;
+    }
+
+    .top-progress-fill {
+      height: 100%;
+      width: 16.666%;
+      background-color: var(--orange);
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ICICI-Inspired Two-Color Solid Corner Accent Stripe (Top-Left) */
+    .corner-accent {
+      position: fixed;
+      top: 6px;
+      left: 0;
+      display: flex;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .corner-accent .bar-navy {
+      width: 56px;
+      height: 10px;
+      background-color: var(--navy);
+    }
+    .corner-accent .bar-orange {
+      width: 28px;
+      height: 10px;
+      background-color: var(--orange);
+    }
+
+    /* Top-Right Fullscreen Button */
+    .fullscreen-btn {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      z-index: 55;
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      background-color: var(--bg-white);
+      border: 3px solid var(--navy);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+    .fullscreen-btn:hover {
+      background-color: var(--navy);
+      color: var(--bg-white);
+      transform: scale(1.05);
+    }
+
+    /* Previous & Next Circular Navigation Arrows */
+    .nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 50;
+      width: 52px;
+      height: 52px;
+      border-radius: 9999px;
+      background-color: var(--bg-white);
+      border: 3px solid var(--navy);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 0 rgba(5, 60, 109, 0.18);
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background-color: var(--orange);
+      border-color: var(--orange);
+      color: var(--bg-white);
+      transform: translateY(-50%) scale(1.06);
+    }
+    .nav-btn:active:not(:disabled) {
+      transform: translateY(-50%) scale(0.96);
+    }
+    .nav-btn:disabled {
+      border-color: #CBD5E1;
+      color: #94A3B8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .nav-prev { left: 16px; }
+    .nav-next { right: 16px; }
+
+    /* Bottom-Right Crisp Slide Counter */
+    .slide-counter {
+      position: fixed;
+      bottom: 16px;
+      right: 24px;
+      z-index: 50;
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      background-color: var(--card-slate);
+      border: 2.5px solid var(--navy);
+      padding: 4px 14px;
+      border-radius: 8px;
+      letter-spacing: 0.08em;
+    }
+
+    /* Subtle Bottom-Left Brand Tag */
+    .brand-footer-tag {
+      position: fixed;
+      bottom: 18px;
+      left: 24px;
+      z-index: 45;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      background-color: var(--orange);
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    /* ==========================================================================
+       3. SNAPPY SLIDE STAGE & TRANSITIONS (NO BLUR LAG ON CLASSROOM PCS)
+       ========================================================================== */
+    .stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-white);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 3.6vh, 36px) 84px clamp(52px, 7vh, 62px) 84px;
+      background-color: var(--bg-white);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(28px);
+      transition: opacity 0.32s ease, transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.32s;
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    .slide.exiting-left {
+      transform: translateX(-28px);
+    }
+
+    .slide-inner {
+      width: 100%;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       4. MASSIVE LAST-BENCH TYPOGRAPHY & SHARED COMPONENTS
+       ========================================================================== */
+    .section-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: clamp(14px, 1.3vw, 18px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg-white);
+      background-color: var(--navy);
+      padding: 6px 16px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .slide-title {
+      font-size: clamp(40px, 4.4vw, 66px);
+      font-weight: 900;
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      color: var(--ink-black);
+      margin: 0 0 clamp(16px, 2.4vh, 24px) 0;
+    }
+
+    .slide-title .accent {
+      color: var(--orange);
+    }
+
+    /* Solid Thick Bullets */
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(12px, 1.5vh, 20px);
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background-color: var(--card-slate);
+      border: 3px solid var(--navy);
+      border-radius: 12px;
+      padding: clamp(12px, 1.5vh, 18px) 20px;
+      font-size: clamp(24px, 2.3vw, 36px);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--ink-black);
+    }
+
+    .bullet-square {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      border-radius: 4px;
+      background-color: var(--orange);
+    }
+    .bullet-square.red {
+      background-color: var(--crimson);
+    }
+    .bullet-square.emerald {
+      background-color: var(--emerald);
+    }
+
+    /* ==========================================================================
+       5. SLIDE 1: COVER LAYOUT & CLEAN PRESENTER BOX FOR FAHAD ANWAR ONLY
+       ========================================================================== */
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .cover-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--navy);
+      color: var(--bg-white);
+      font-family: var(--font-mono);
+      font-size: clamp(15px, 1.35vw, 19px);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-bottom: 22px;
+    }
+
+    .cover-title {
+      font-size: clamp(48px, 5.6vw, 76px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--ink-black);
+      margin: 0 0 16px 0;
+    }
+
+    .cover-subtitle {
+      font-size: clamp(28px, 2.8vw, 40px);
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 0 22px 0;
+      letter-spacing: -0.01em;
+    }
+
+    .orange-rule {
+      width: 120px;
+      height: 6px;
+      background-color: var(--orange);
+      border-radius: 3px;
+      margin-bottom: 26px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .cover-chip {
+      font-size: clamp(18px, 1.55vw, 22px);
+      font-weight: 800;
+      color: var(--navy);
+      background-color: var(--card-slate);
+      border: 3px solid var(--navy);
+      border-radius: 10px;
+      padding: 10px 18px;
+    }
+
+    /* FIX 1: Clean, Confident Executive Focus Solely on "Fahad Anwar" */
+    .presenter-box {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      background-color: var(--card-slate);
+      border: 3px solid var(--navy);
+      border-left: 8px solid var(--orange);
+      border-radius: 12px;
+      padding: 12px 26px;
+    }
+
+    .presenter-label {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .presenter-name {
+      font-size: clamp(26px, 2.4vw, 34px);
+      font-weight: 900;
+      color: var(--ink-black);
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+    }
+
+    /* Animated Pulse Path on Slide 1 SVG */
+    .pulse-stroke {
+      stroke-dasharray: 420;
+      stroke-dashoffset: 420;
+      animation: drawPulse 2.8s ease-in-out infinite;
+    }
+    @keyframes drawPulse {
+      0% { stroke-dashoffset: 420; }
+      60% { stroke-dashoffset: 0; }
+      88% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -420; }
+    }
+
+    /* ==========================================================================
+       6. SLIDE 2: OBJECTIVES (AUTO-CYCLING FOCUS + HUB-AND-SPOKE DIAGRAM)
+       ========================================================================== */
+    .obj-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .obj-list {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(10px, 1.4vh, 16px);
+    }
+
+    .obj-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: clamp(12px, 1.5vh, 18px) 22px;
+      background-color: var(--card-slate);
+      border: 3px solid var(--navy);
+      border-left: 10px solid var(--navy);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .obj-num {
+      font-family: var(--font-mono);
+      font-size: clamp(22px, 2vw, 30px);
+      font-weight: 700;
+      color: var(--navy);
+      min-width: 44px;
+    }
+
+    .obj-text {
+      font-size: clamp(24px, 2.3vw, 36px);
+      font-weight: 800;
+      color: var(--ink-black);
+      line-height: 1.12;
+    }
+
+    .obj-item.is-active,
+    .obj-item:hover {
+      background-color: var(--orange-tint);
+      border-color: var(--orange);
+      border-left-color: var(--orange);
+      transform: translateX(8px);
+    }
+
+    .obj-item.is-active .obj-num,
+    .obj-item:hover .obj-num {
+      color: var(--orange);
+    }
+
+    .hub-node rect {
+      transition: fill 0.3s ease, stroke 0.3s ease;
+    }
+    .hub-node text {
+      transition: fill 0.3s ease;
+    }
+    .hub-spoke {
+      transition: stroke 0.3s ease, stroke-width 0.3s ease;
+    }
+
+    /* ==========================================================================
+       7. SLIDE 3: LIQUIDITY RISK & 40-SECOND OFFLINE CANVAS VIDEO PLAYER
+       ========================================================================== */
+    .liq-grid {
+      display: grid;
+      grid-template-columns: 0.78fr 1.15fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .video-shell {
+      background-color: var(--bg-white);
+      border: 3.5px solid var(--navy);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 0 rgba(5, 60, 109, 0.14);
+    }
+
+    .video-shell.is-expanded {
+      position: fixed;
+      inset: 14px;
+      z-index: 120;
+      border-width: 4px;
+      box-shadow: 0 0 0 100vmax rgba(9, 13, 22, 0.88);
+    }
+
+    .video-header {
+      background-color: var(--navy);
+      color: var(--bg-white);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .video-title-text {
+      font-family: var(--font-mono);
+      font-size: clamp(13px, 1.1vw, 16px);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background-color: var(--orange);
+      display: inline-block;
+    }
+
+    .expand-btn {
+      background-color: var(--orange);
+      color: var(--bg-white);
+      border: 2px solid var(--bg-white);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.15s ease, transform 0.15s ease;
+    }
+    .expand-btn:hover {
+      background-color: #B84300;
+      transform: scale(1.03);
+    }
+
+    .video-viewport {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background-color: var(--bg-white);
+      overflow: hidden;
+    }
+
+    .video-shell.is-expanded .video-viewport {
+      flex: 1;
+      aspect-ratio: auto;
+      min-height: 0;
+    }
+
+    #svb-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .poster-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.14);
+      pointer-events: auto;
+      cursor: pointer;
+      transition: opacity 0.25s ease;
+    }
+    .poster-overlay.hidden-overlay {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .poster-play-btn {
+      background-color: var(--orange);
+      color: var(--bg-white);
+      border: 4px solid var(--navy);
+      border-radius: 14px;
+      padding: 16px 30px;
+      font-size: clamp(18px, 1.8vw, 26px);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--navy);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+    .poster-play-btn:hover {
+      background-color: #B84300;
+      transform: translateY(-2px);
+    }
+    .poster-play-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 var(--navy);
+    }
+
+    .video-controls {
+      background-color: var(--card-slate);
+      border-top: 3px solid var(--navy);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .v-ctrl-btn {
+      background-color: var(--navy);
+      color: var(--bg-white);
+      border: 2.5px solid var(--navy);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.15s ease;
+      white-space: nowrap;
+    }
+    .v-ctrl-btn.play-primary {
+      background-color: var(--orange);
+      border-color: var(--orange);
+    }
+    .v-ctrl-btn.play-primary:hover {
+      background-color: #B84300;
+      border-color: #B84300;
+    }
+    .v-ctrl-btn:hover {
+      background-color: var(--navy-dark);
+    }
+
+    .scrubber-wrap {
+      flex: 1;
+      height: 18px;
+      background-color: #CBD5E1;
+      border: 2.5px solid var(--navy);
+      border-radius: 9999px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scrubber-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--orange);
+      pointer-events: none;
+    }
+
+    .v-timer {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink-black);
+      min-width: 112px;
+      text-align: right;
+    }
+
+    /* ==========================================================================
+       8. SLIDE 4: OPERATIONAL RISK (MACRO & MICRO SIDE-BY-SIDE CARDS)
+       ========================================================================== */
+    .ops-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 24px;
+    }
+
+    .ops-card {
+      background-color: var(--bg-white);
+      border: 3px solid var(--border-black);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ops-top-bar {
+      height: 10px;
+      width: 100%;
+    }
+    .ops-top-bar.crimson { background-color: var(--crimson); }
+    .ops-top-bar.orange { background-color: var(--orange); }
+
+    .ops-card-head {
+      padding: 16px 24px 12px 24px;
+      border-bottom: 2.5px solid #CBD5E1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ops-card-label {
+      font-family: var(--font-mono);
+      font-size: clamp(18px, 1.7vw, 24px);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+    .ops-card-label.crimson { color: var(--crimson); }
+    .ops-card-label.orange { color: var(--orange); }
+
+    .ops-rows {
+      padding: 16px 22px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ops-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background-color: var(--card-slate);
+      border: 2.5px solid var(--navy);
+      border-radius: 10px;
+      padding: clamp(12px, 1.5vh, 18px) 18px;
+    }
+
+    .ops-case-name {
+      font-size: clamp(22px, 2.1vw, 32px);
+      font-weight: 800;
+      color: var(--ink-black);
+      line-height: 1.15;
+    }
+
+    .ops-stat-badge {
+      font-family: var(--font-mono);
+      font-size: clamp(20px, 1.9vw, 28px);
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      color: var(--bg-white);
+      white-space: nowrap;
+    }
+    .ops-stat-badge.crimson { background-color: var(--crimson); }
+    .ops-stat-badge.orange { background-color: var(--orange); }
+
+    .source-bar {
+      background-color: var(--card-slate);
+      border: 3px solid var(--navy);
+      border-radius: 12px;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .source-title {
+      font-family: var(--font-mono);
+      font-size: clamp(15px, 1.3vw, 19px);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.08em;
+      margin-right: 6px;
+    }
+
+    .source-pill {
+      background-color: var(--bg-white);
+      border: 2.5px solid var(--navy);
+      color: var(--ink-black);
+      font-size: clamp(16px, 1.4vw, 20px);
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 8px;
+    }
+
+    /* ==========================================================================
+       9. SLIDE 5: CREDIT RISK & 3-STAGE TURNAROUND FLOWCHART
+       ========================================================================== */
+    .credit-grid {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .flow-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .flow-stage {
+      background-color: var(--bg-white);
+      border: 3px solid var(--border-black);
+      border-left-width: 10px;
+      border-radius: 12px;
+      padding: clamp(14px, 1.8vh, 22px) 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .flow-stage.stage-crimson { border-left-color: var(--crimson); }
+    .flow-stage.stage-orange { border-left-color: var(--orange); }
+    .flow-stage.stage-navy {
+      background-color: var(--navy);
+      border-color: var(--navy);
+      border-left-color: var(--orange);
+      color: var(--bg-white);
+    }
+
+    .stage-kicker {
+      font-family: var(--font-mono);
+      font-size: clamp(13px, 1.2vw, 16px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+    .stage-crimson .stage-kicker { color: var(--crimson); }
+    .stage-orange .stage-kicker { color: var(--orange); }
+    .stage-navy .stage-kicker { color: #FDBA74; }
+
+    .stage-main {
+      font-size: clamp(24px, 2.3vw, 34px);
+      font-weight: 900;
+      line-height: 1.12;
+      color: var(--ink-black);
+    }
+    .stage-navy .stage-main {
+      color: var(--bg-white);
+    }
+
+    .stage-pill {
+      font-family: var(--font-mono);
+      font-size: clamp(16px, 1.45vw, 22px);
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .stage-crimson .stage-pill {
+      background-color: var(--crimson-tint);
+      border: 2.5px solid var(--crimson);
+      color: var(--crimson);
+    }
+    .stage-orange .stage-pill {
+      background-color: var(--orange-tint);
+      border: 2.5px solid var(--orange);
+      color: var(--orange);
+    }
+
+    .flow-chevron {
+      display: flex;
+      justify-content: center;
+      padding: 2px 0;
+    }
+    .flow-chevron svg {
+      animation: bounceDown 1.8s ease-in-out infinite;
+    }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    /* ==========================================================================
+       10. SLIDE 6: EXPANDED 6-QUESTION REVISION QUIZ, ★ RECAP & CONCLUSION
+       100% faithful to the chunky 3px solid #053C6D corporate style.
+       ========================================================================== */
+    .quiz-header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: clamp(12px, 1.6vh, 16px);
+    }
+
+    .quiz-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .quiz-action-btn {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 8px;
+      border: 3px solid var(--navy);
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .quiz-action-btn.reveal-btn {
+      background-color: var(--navy);
+      color: var(--bg-white);
+    }
+    .quiz-action-btn.reveal-btn:hover {
+      background-color: var(--emerald);
+      border-color: var(--emerald);
+    }
+    .quiz-action-btn.reset-btn {
+      background-color: var(--bg-white);
+      color: var(--navy);
+    }
+    .quiz-action-btn.reset-btn:hover {
+      background-color: var(--card-slate);
+    }
+
+    /* High-Contrast Pill Navigation Strip (Q1–Q6 + ★ Recap + ◀ Prev / Next ▶) */
+    .quiz-nav-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: clamp(12px, 1.8vh, 18px);
+    }
+
+    .quiz-tab-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .quiz-tab-btn {
+      font-family: var(--font-mono);
+      font-size: clamp(15px, 1.3vw, 18px);
+      font-weight: 700;
+      padding: 8px 15px;
+      border-radius: 10px;
+      border: 3px solid var(--navy);
+      background-color: var(--bg-white);
+      color: var(--navy);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+    }
+    .quiz-tab-btn:hover {
+      background-color: var(--orange-tint);
+      border-color: var(--orange);
+      color: var(--ink-black);
+    }
+    .quiz-tab-btn.is-active {
+      background-color: var(--orange);
+      border-color: var(--ink-black);
+      color: var(--bg-white);
+    }
+
+    .tab-check {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--emerald);
+      color: var(--bg-white);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .quiz-tab-btn.is-answered .tab-check {
+      display: inline-flex;
+    }
+    .quiz-tab-btn.is-active.is-answered .tab-check {
+      background-color: var(--bg-white);
+      color: var(--emerald);
+    }
+
+    .quiz-step-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quiz-step-btn {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 3px solid var(--navy);
+      background-color: var(--card-slate);
+      color: var(--navy);
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .quiz-step-btn:hover:not(:disabled) {
+      background-color: var(--navy);
+      color: var(--bg-white);
+    }
+    .quiz-step-btn:disabled {
+      border-color: #CBD5E1;
+      color: #94A3B8;
+      background-color: var(--bg-white);
+      cursor: not-allowed;
+    }
+
+    /* Main Single-Focus Interactive Stage Card (Matches .mcq-card Exactly) */
+    .quiz-stage-card {
+      background-color: var(--card-slate);
+      border: 3px solid var(--navy);
+      border-radius: 14px;
+      padding: clamp(16px, 2.2vh, 22px) clamp(18px, 2.2vw, 26px);
+      margin-bottom: clamp(14px, 2vh, 20px);
+    }
+
+    .q-meta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: clamp(10px, 1.4vh, 14px);
+    }
+
+    .mcq-qnum {
+      background-color: var(--navy);
+      color: var(--bg-white);
+      font-family: var(--font-mono);
+      font-size: clamp(15px, 1.35vw, 19px);
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    .q-topic-pill {
+      background-color: var(--bg-white);
+      border: 3px solid var(--orange);
+      color: var(--orange);
+      font-family: var(--font-mono);
+      font-size: clamp(13px, 1.2vw, 17px);
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .q-title-big {
+      font-size: clamp(26px, 2.9vw, 38px);
+      font-weight: 900;
+      color: var(--ink-black);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin: 0 0 clamp(14px, 2vh, 20px) 0;
+    }
+
+    .mcq-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: clamp(14px, 2vh, 18px);
+    }
+
+    .mcq-opt {
+      background-color: var(--bg-white);
+      border: 3px solid var(--navy);
+      border-radius: 12px;
+      padding: clamp(14px, 1.8vh, 18px) 18px;
+      font-family: var(--font-sans);
+      font-size: clamp(20px, 1.9vw, 26px);
+      font-weight: 800;
+      color: var(--ink-black);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+    }
+    .mcq-opt:hover {
+      background-color: var(--orange-tint);
+      border-color: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    .mcq-opt.is-correct {
+      background-color: var(--emerald);
+      border-color: var(--emerald);
+      color: var(--bg-white);
+    }
+
+    .mcq-opt.is-wrong {
+      background-color: var(--crimson-tint);
+      border-color: var(--crimson);
+      color: var(--crimson);
+    }
+
+    .opt-mark {
+      font-size: 24px;
+      font-weight: 900;
+      display: none;
+      flex-shrink: 0;
+    }
+    .mcq-opt.is-correct .opt-mark,
+    .mcq-opt.is-wrong .opt-mark {
+      display: inline;
+    }
+
+    /* Key Recap Strip Inside Question Card */
+    .recap-strip {
+      background-color: var(--bg-white);
+      border: 3px dashed #94A3B8;
+      border-radius: 12px;
+      padding: clamp(11px, 1.4vh, 15px) 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 60px;
+    }
+
+    .recap-strip.is-unlocked {
+      border-style: solid;
+      border-color: var(--emerald);
+      background-color: var(--bg-white);
+    }
+
+    .recap-placeholder {
+      font-family: var(--font-mono);
+      font-size: clamp(14px, 1.25vw, 17px);
+      font-weight: 700;
+      color: #475569;
+      letter-spacing: 0.04em;
+    }
+
+    .recap-pill {
+      background-color: var(--emerald);
+      color: var(--bg-white);
+      font-family: var(--font-mono);
+      font-size: clamp(13px, 1.15vw, 16px);
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .recap-text {
+      font-size: clamp(17px, 1.65vw, 22px);
+      font-weight: 800;
+      color: var(--ink-black);
+      line-height: 1.25;
+    }
+
+    /* ★ Recap 2x2 High-Contrast Summary Grid */
+    .recap-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(12px, 1.6vh, 16px);
+    }
+
+    .recap-card {
+      background-color: var(--bg-white);
+      border: 3px solid var(--navy);
+      border-left-width: 10px;
+      border-radius: 12px;
+      padding: clamp(14px, 1.8vh, 18px) 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .recap-card.bar-crimson { border-left-color: var(--crimson); }
+    .recap-card.bar-orange { border-left-color: var(--orange); }
+    .recap-card.bar-navy { border-left-color: var(--navy); }
+    .recap-card.bar-emerald { border-left-color: var(--emerald); }
+
+    .recap-card-head {
+      font-family: var(--font-mono);
+      font-size: clamp(14px, 1.25vw, 17px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .recap-card.bar-crimson .recap-card-head { color: var(--crimson); }
+    .recap-card.bar-orange .recap-card-head { color: var(--orange); }
+    .recap-card.bar-navy .recap-card-head { color: var(--navy); }
+    .recap-card.bar-emerald .recap-card-head { color: var(--emerald); }
+
+    .recap-card-body {
+      font-size: clamp(19px, 1.75vw, 24px);
+      font-weight: 800;
+      color: var(--ink-black);
+      line-height: 1.22;
+    }
+
+    /* Full-Width Solid Navy Conclusion Banner */
+    .conclusion-banner {
+      background-color: var(--navy);
+      color: var(--bg-white);
+      border: 3px solid var(--navy);
+      border-radius: 12px;
+      padding: clamp(14px, 1.8vh, 18px) 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .conclusion-left {
+      font-size: clamp(24px, 2.5vw, 38px);
+      font-weight: 900;
+      letter-spacing: -0.015em;
+    }
+    .conclusion-left .orange-word {
+      color: #FF8C42;
+    }
+
+    .conclusion-right {
+      font-family: var(--font-mono);
+      font-size: clamp(20px, 2vw, 30px);
+      font-weight: 700;
+      background-color: var(--orange);
+      color: var(--bg-white);
+      padding: 8px 22px;
+      border-radius: 8px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ==========================================================================
+       11. HIDDEN PRESENTER REHEARSAL NOTES DRAWER (TOGGLE VIA 'N' KEY ONLY)
+       ========================================================================== */
+    .notes-drawer {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: min(460px, 92vw);
+      background-color: #FFFFFF;
+      border-left: 4px solid var(--navy);
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -12px 0 36px rgba(9, 13, 22, 0.25);
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      user-select: text;
+    }
+    .notes-drawer.is-open {
+      transform: translateX(0);
+    }
+
+    .notes-header {
+      background-color: var(--navy);
+      color: var(--bg-white);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .notes-header h3 {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .notes-close {
+      background-color: var(--orange);
+      color: var(--bg-white);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .notes-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--ink-black);
+    }
+    .notes-body h4 {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--orange);
+    }
+    .notes-body ul {
+      margin: 0 0 14px 0;
+      padding-left: 20px;
+    }
+    .notes-body li {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .notes-shortcuts {
+      background-color: var(--card-slate);
+      border-top: 2px solid var(--navy);
+      padding: 12px 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* ==========================================================================
+       12. RESPONSIVE ADAPTION FOR 4:3 (1024x768), 1366x768 & MOBILE PROJECTORS
+       ========================================================================== */
+    @media (max-width: 1199px) {
+      .slide {
+        padding: 26px 32px 70px 32px;
+      }
+      .nav-btn {
+        top: auto;
+        bottom: 14px;
+        transform: none;
+        width: 44px;
+        height: 44px;
+      }
+      .nav-btn:hover:not(:disabled) {
+        transform: scale(1.06);
+      }
+      .nav-prev { left: 22px; }
+      .nav-next { left: 76px; right: auto; }
+      .brand-footer-tag { display: none; }
+    }
+
+    @media (max-width: 960px) {
+      .cover-grid,
+      .obj-grid,
+      .liq-grid,
+      .ops-grid,
+      .credit-grid,
+      .mcq-options,
+      .recap-grid {
+        grid-template-columns: 1fr;
+      }
+      .slide {
+        align-items: flex-start;
+        padding: 26px 20px 80px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 6PX SOLID HIGH-VISIBILITY TOP PROGRESS BAR -->
+  <div class="top-progress-track" aria-hidden="true">
+    <div id="top-progress-fill" class="top-progress-fill"></div>
+  </div>
+
+  <!-- ICICI-INSPIRED TWO-COLOR SOLID CORNER ACCENT -->
+  <div class="corner-accent" aria-hidden="true">
+    <div class="bar-navy"></div>
+    <div class="bar-orange"></div>
+  </div>
+
+  <!-- FULLSCREEN TOGGLE (TOP-RIGHT) -->
+  <button id="fullscreen-btn" class="fullscreen-btn" type="button" title="Toggle Fullscreen (F)" aria-label="Toggle Fullscreen">
+    <svg id="fs-icon-enter" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+    </svg>
+    <svg id="fs-icon-exit" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+    </svg>
+  </button>
+
+  <!-- PREVIOUS & NEXT ARROWS -->
+  <button id="prev-btn" class="nav-btn nav-prev" type="button" title="Previous Slide (←)" aria-label="Previous Slide">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </button>
+
+  <button id="next-btn" class="nav-btn nav-next" type="button" title="Next Slide (→)" aria-label="Next Slide">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18l6-6-6-6"/>
+    </svg>
+  </button>
+
+  <!-- CRISP FOOTER CHROME -->
+  <div class="brand-footer-tag" aria-hidden="true">
+    <span class="brand-dot"></span> ICICI BANK PO • RISK CASE STUDY
+  </div>
+  <div id="slide-counter" class="slide-counter tabular-nums" aria-live="polite">01 / 06</div>
+
+  <!-- ========================================================================
+       MAIN 6-SLIDE PRESENTATION STAGE
+       ======================================================================== -->
+  <main class="stage" id="presentation-stage">
+
+    <!-- ======================================================================
+         SLIDE 1: TOPIC (COVER SLIDE) — EXACT STYLE + CLEAN FOCUS ON FAHAD ANWAR
+         ====================================================================== -->
+    <section class="slide active" data-slide="0">
+      <div class="slide-inner">
+        <div class="cover-grid">
+          <!-- Left Column: Title, Subtitle, Chips, Presenter -->
+          <div>
+            <div class="cover-pill">ICICI BANK PO • CASE STUDY</div>
+            <h1 class="cover-title">
+              Banking <span style="color: var(--orange);">Risks</span><br />&amp; Losses
+            </h1>
+            <p class="cover-subtitle">Sector Case Study</p>
+            <div class="orange-rule"></div>
+
+            <div class="chip-row">
+              <span class="cover-chip">Liquidity Risk</span>
+              <span class="cover-chip">Operational Risk</span>
+              <span class="cover-chip">Credit Risk</span>
+              <span class="cover-chip">ICICI Learnings</span>
+            </div>
+
+            <!-- FIX 1: Clean, Chunky Executive Presenter Block Solely for Fahad Anwar -->
+            <div class="presenter-box">
+              <span class="presenter-label">PRESENTED BY</span>
+              <span class="presenter-name">Fahad Anwar</span>
+            </div>
+          </div>
+
+          <!-- Right Column: Bold High-Contrast Animated SVG Shield & Risk Pulse -->
+          <div style="display:flex; justify-content:center; align-items:center;">
+            <svg viewBox="0 0 420 420" style="width:100%; max-width:390px; height:auto;" aria-label="Banking Risk Shield Graphic">
+              <!-- Outer Crisp Architectural Ring -->
+              <circle cx="210" cy="210" r="192" fill="#F1F5F9" stroke="#053C6D" stroke-width="5"/>
+              <circle cx="210" cy="210" r="168" fill="#FFFFFF" stroke="#D95300" stroke-width="4" stroke-dasharray="16 10"/>
+
+              <!-- Solid Architectural Shield -->
+              <path d="M210 56 L326 102 V210 C326 286 274 342 210 368 C146 342 94 286 94 210 V102 Z"
+                    fill="#FFFFFF" stroke="#053C6D" stroke-width="7" stroke-linejoin="round"/>
+              <path d="M210 78 L306 116 V208 C306 272 263 320 210 344 C157 320 114 272 114 208 V116 Z"
+                    fill="#F1F5F9" stroke="#090D16" stroke-width="3.5" stroke-linejoin="round"/>
+
+              <!-- Horizontal Reference Grid Inside Shield -->
+              <line x1="132" y1="168" x2="288" y2="168" stroke="#CBD5E1" stroke-width="3"/>
+              <line x1="132" y1="212" x2="288" y2="212" stroke="#CBD5E1" stroke-width="3"/>
+              <line x1="132" y1="256" x2="288" y2="256" stroke="#CBD5E1" stroke-width="3"/>
+
+              <!-- Risk Crash & Recovery Pulse Graph (Thick 6px Strokes) -->
+              <polyline points="132,208 164,208 182,154 206,274 232,184 256,226 288,162"
+                        fill="none" stroke="#CBD5E1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline class="pulse-stroke" points="132,208 164,208 182,154 206,274 232,184 256,226 288,162"
+                        fill="none" stroke="#B91C1C" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <!-- Key Data Vertex Dots -->
+              <circle cx="182" cy="154" r="7" fill="#053C6D"/>
+              <circle cx="206" cy="274" r="8" fill="#B91C1C"/>
+              <circle cx="288" cy="162" r="8" fill="#D95300"/>
+
+              <!-- Crisp Top Pillar Badge -->
+              <rect x="150" y="96" width="120" height="32" rx="6" fill="#053C6D"/>
+              <text x="210" y="118" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">RISK GUARD</text>
+
+              <!-- Crisp Bottom Shield Tag -->
+              <rect x="152" y="286" width="116" height="30" rx="6" fill="#D95300"/>
+              <text x="210" y="306" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">5 CORE RISKS</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SLIDE 2: OBJECTIVES (100% IDENTICAL TO ATTACHED FILE)
+         ====================================================================== -->
+    <section class="slide" data-slide="1">
+      <div class="slide-inner">
+        <div class="section-tag">01 • OBJECTIVES</div>
+        <h2 class="slide-title">Today's <span class="accent">Focus</span></h2>
+
+        <div class="obj-grid">
+          <!-- Left 55%: 5 Huge Numbered Focus Items (Auto-Cycling Every 3s) -->
+          <div class="obj-list" id="objectives-list">
+            <div class="obj-item is-active" data-idx="0">
+              <span class="obj-num">01</span>
+              <span class="obj-text">Core Banking Risks</span>
+            </div>
+            <div class="obj-item" data-idx="1">
+              <span class="obj-num">02</span>
+              <span class="obj-text">Major Bank Losses</span>
+            </div>
+            <div class="obj-item" data-idx="2">
+              <span class="obj-num">03</span>
+              <span class="obj-text">Operational Risk Levels</span>
+            </div>
+            <div class="obj-item" data-idx="3">
+              <span class="obj-num">04</span>
+              <span class="obj-text">ICICI Bank Learnings</span>
+            </div>
+            <div class="obj-item" data-idx="4">
+              <span class="obj-num">05</span>
+              <span class="obj-text">RM Risk Defense</span>
+            </div>
+          </div>
+
+          <!-- Right 45%: High-Contrast 5 Banking Risks Hub-and-Spoke SVG -->
+          <div style="display:flex; justify-content:center; align-items:center;">
+            <svg viewBox="0 0 480 430" style="width:100%; max-width:470px; height:auto;" aria-label="5 Banking Risks Hub and Spoke Diagram">
+              <!-- Thick Solid Spokes Connecting Center to 5 Risk Nodes -->
+              <line id="spoke-0" class="hub-spoke" x1="240" y1="215" x2="240" y2="62" stroke="#D95300" stroke-width="5"/>
+              <line id="spoke-1" class="hub-spoke" x1="240" y1="215" x2="390" y2="152" stroke="#053C6D" stroke-width="4.5"/>
+              <line id="spoke-2" class="hub-spoke" x1="240" y1="215" x2="345" y2="355" stroke="#053C6D" stroke-width="4.5"/>
+              <line id="spoke-3" class="hub-spoke" x1="240" y1="215" x2="135" y2="355" stroke="#053C6D" stroke-width="4.5"/>
+              <line id="spoke-4" class="hub-spoke" x1="240" y1="215" x2="90" y2="152" stroke="#053C6D" stroke-width="4.5"/>
+
+              <!-- Center Solid Navy Hub: Bank Stability -->
+              <circle cx="240" cy="215" r="76" fill="#053C6D" stroke="#090D16" stroke-width="4"/>
+              <circle cx="240" cy="215" r="66" fill="none" stroke="#D95300" stroke-width="3"/>
+              <text x="240" y="210" text-anchor="middle" fill="#FFFFFF" font-family="Plus Jakarta Sans, sans-serif" font-size="22" font-weight="900">BANK</text>
+              <text x="240" y="236" text-anchor="middle" fill="#FF9E5E" font-family="Plus Jakarta Sans, sans-serif" font-size="20" font-weight="800">STABILITY</text>
+
+              <!-- Node 0 (Top): Liquidity -->
+              <g class="hub-node" id="hub-node-0">
+                <rect x="155" y="24" width="170" height="54" rx="12" fill="#D95300" stroke="#090D16" stroke-width="3.5"/>
+                <text x="240" y="59" text-anchor="middle" fill="#FFFFFF" font-family="Plus Jakarta Sans, sans-serif" font-size="22" font-weight="900">Liquidity</text>
+              </g>
+
+              <!-- Node 1 (Top-Right): Operational -->
+              <g class="hub-node" id="hub-node-1">
+                <rect x="304" y="122" width="166" height="54" rx="12" fill="#FFFFFF" stroke="#053C6D" stroke-width="3.5"/>
+                <text x="387" y="157" text-anchor="middle" fill="#090D16" font-family="Plus Jakarta Sans, sans-serif" font-size="21" font-weight="900">Operational</text>
+              </g>
+
+              <!-- Node 2 (Bottom-Right): Credit -->
+              <g class="hub-node" id="hub-node-2">
+                <rect x="272" y="334" width="154" height="54" rx="12" fill="#FFFFFF" stroke="#053C6D" stroke-width="3.5"/>
+                <text x="349" y="369" text-anchor="middle" fill="#090D16" font-family="Plus Jakarta Sans, sans-serif" font-size="22" font-weight="900">Credit</text>
+              </g>
+
+              <!-- Node 3 (Bottom-Left): Market -->
+              <g class="hub-node" id="hub-node-3">
+                <rect x="54" y="334" width="154" height="54" rx="12" fill="#FFFFFF" stroke="#053C6D" stroke-width="3.5"/>
+                <text x="131" y="369" text-anchor="middle" fill="#090D16" font-family="Plus Jakarta Sans, sans-serif" font-size="22" font-weight="900">Market</text>
+              </g>
+
+              <!-- Node 4 (Top-Left): Interest Rate -->
+              <g class="hub-node" id="hub-node-4">
+                <rect x="8" y="122" width="168" height="54" rx="12" fill="#FFFFFF" stroke="#053C6D" stroke-width="3.5"/>
+                <text x="92" y="157" text-anchor="middle" fill="#090D16" font-family="Plus Jakarta Sans, sans-serif" font-size="20" font-weight="900">Interest Rate</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SLIDE 3: LIQUIDITY & INTEREST RATE RISK + 40-SEC ANIMATED VIDEO (IDENTICAL)
+         ====================================================================== -->
+    <section class="slide" data-slide="2">
+      <div class="slide-inner">
+        <div class="section-tag">02 • LIQUIDITY &amp; INTEREST RATE RISK</div>
+        <h2 class="slide-title">Liquidity <span class="accent">Crisis Cases</span></h2>
+
+        <div class="liq-grid">
+          <!-- Left 42%: 5 Massive Bold 2-3 Word Bullets -->
+          <ul class="bullet-list">
+            <li class="bullet-item"><span class="bullet-square red"></span>SVB Collapse (2023)</li>
+            <li class="bullet-item"><span class="bullet-square"></span>Interest Rate Shock</li>
+            <li class="bullet-item"><span class="bullet-square red"></span>Yes Bank Moratorium</li>
+            <li class="bullet-item"><span class="bullet-square"></span>ICICI 2008 Rumor</li>
+            <li class="bullet-item"><span class="bullet-square emerald"></span>Strong LCR Shield</li>
+          </ul>
+
+          <!-- Right 58%: Custom 40-Second Offline Animated Case Study Video Player -->
+          <div class="video-shell" id="video-shell">
+            <div class="video-header">
+              <div class="video-title-text">
+                <span class="live-dot"></span>
+                ANIMATED CASE STUDY • SVB 48-HOUR COLLAPSE (0:40)
+              </div>
+              <button id="video-expand-btn" class="expand-btn" type="button" title="Expand Video Fullscreen">
+                <span id="expand-btn-label">⛶ EXPAND FULLSCREEN</span>
+              </button>
+            </div>
+
+            <div class="video-viewport" id="video-viewport">
+              <canvas id="svb-canvas" aria-label="40 second animated explainer of Silicon Valley Bank 48-hour collapse"></canvas>
+              <div id="poster-overlay" class="poster-overlay">
+                <button id="poster-play-btn" class="poster-play-btn" type="button">
+                  ▶ PLAY 40s ANIMATION
+                </button>
+              </div>
+            </div>
+
+            <div class="video-controls">
+              <button id="v-play-btn" class="v-ctrl-btn play-primary" type="button" title="Play / Pause (V)">▶ Play</button>
+              <button id="v-replay-btn" class="v-ctrl-btn" type="button" title="Restart Video">↺ Replay</button>
+              <div id="v-scrubber" class="scrubber-wrap" role="slider" aria-label="Video timeline" aria-valuemin="0" aria-valuemax="40" aria-valuenow="0">
+                <div id="v-scrubber-fill" class="scrubber-fill"></div>
+              </div>
+              <div id="v-timer" class="v-timer tabular-nums">00:00 / 00:40</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SLIDE 4: OPERATIONAL RISK (MACRO & MICRO LEVELS) (IDENTICAL)
+         ====================================================================== -->
+    <section class="slide" data-slide="3">
+      <div class="slide-inner">
+        <div class="section-tag">03 • OPERATIONAL RISK</div>
+        <h2 class="slide-title">Macro &amp; <span class="accent">Micro Losses</span></h2>
+
+        <div class="ops-grid">
+          <!-- Left Card: MACRO LEVEL (Crimson Top Accent) -->
+          <div class="ops-card">
+            <div class="ops-top-bar crimson"></div>
+            <div class="ops-card-head">
+              <span class="ops-card-label crimson">MACRO LEVEL</span>
+              <span style="font-family:var(--font-mono); font-size:15px; font-weight:700; color:#090D16;">SYSTEMIC IMPACT</span>
+            </div>
+            <div class="ops-rows">
+              <div class="ops-row">
+                <span class="ops-case-name">PNB SWIFT Fraud</span>
+                <span class="ops-stat-badge crimson tabular-nums">₹11,400+ Cr</span>
+              </div>
+              <div class="ops-row">
+                <span class="ops-case-name">UCO IMPS Glitch</span>
+                <span class="ops-stat-badge crimson tabular-nums">₹820 Cr</span>
+              </div>
+              <div class="ops-row">
+                <span class="ops-case-name">HDFC IT Ban</span>
+                <span class="ops-stat-badge crimson tabular-nums">15-Mo Curbs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Card: MICRO LEVEL (Vivid Orange Top Accent) -->
+          <div class="ops-card">
+            <div class="ops-top-bar orange"></div>
+            <div class="ops-card-head">
+              <span class="ops-card-label orange">MICRO LEVEL</span>
+              <span style="font-family:var(--font-mono); font-size:15px; font-weight:700; color:#090D16;">BRANCH &amp; RM</span>
+            </div>
+            <div class="ops-rows">
+              <div class="ops-row">
+                <span class="ops-case-name">RBI Compliance Fines</span>
+                <span class="ops-stat-badge orange tabular-nums">₹12.19 Cr</span>
+              </div>
+              <div class="ops-row">
+                <span class="ops-case-name">Branch KYC Lapses</span>
+                <span class="ops-stat-badge orange">High Risk</span>
+              </div>
+              <div class="ops-row">
+                <span class="ops-case-name">Maker-Checker Bypass</span>
+                <span class="ops-stat-badge orange">Process Gap</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Authentic Data Sources Strip -->
+        <div class="source-bar">
+          <span class="source-title">DATA SOURCES:</span>
+          <span class="source-pill">RBI Reports</span>
+          <span class="source-pill">PwC Survey</span>
+          <span class="source-pill">Deloitte Outlook</span>
+          <span class="source-pill">McKinsey</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SLIDE 5: CREDIT RISK & ICICI TURNAROUND (IDENTICAL)
+         ====================================================================== -->
+    <section class="slide" data-slide="4">
+      <div class="slide-inner">
+        <div class="section-tag">04 • CREDIT &amp; GOVERNANCE RISK</div>
+        <h2 class="slide-title">Credit &amp; <span class="accent">Turnaround</span></h2>
+
+        <div class="credit-grid">
+          <!-- Left 48%: 5 Huge Bold 2-3 Word Bullets -->
+          <ul class="bullet-list">
+            <li class="bullet-item"><span class="bullet-square red"></span>2008 Subprime Crash</li>
+            <li class="bullet-item"><span class="bullet-square red"></span>ICICI Videocon NPA</li>
+            <li class="bullet-item"><span class="bullet-square"></span>Governance Risk Impact</li>
+            <li class="bullet-item"><span class="bullet-square emerald"></span>Strict Risk Culture</li>
+            <li class="bullet-item"><span class="bullet-square emerald"></span>RM First Defense</li>
+          </ul>
+
+          <!-- Right 52%: 3-Stage High-Contrast Vertical Turnaround Flowchart -->
+          <div class="flow-stack">
+            <!-- Stage 1 -->
+            <div class="flow-stage stage-crimson">
+              <div>
+                <div class="stage-kicker">01 • PAST SHOCK</div>
+                <div class="stage-main">2008 &amp; Videocon</div>
+              </div>
+              <div class="stage-pill tabular-nums">$600B+ / ₹3,250 Cr</div>
+            </div>
+
+            <div class="flow-chevron" aria-hidden="true">
+              <svg width="34" height="28" viewBox="0 0 34 28" fill="none">
+                <path d="M5 6L17 18L29 6" stroke="#053C6D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 14L17 22L25 14" stroke="#D95300" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Stage 2 -->
+            <div class="flow-stage stage-orange">
+              <div>
+                <div class="stage-kicker">02 • ICICI OVERHAUL</div>
+                <div class="stage-main">Strict Underwriting</div>
+              </div>
+              <div class="stage-pill">Zero Conflict</div>
+            </div>
+
+            <div class="flow-chevron" aria-hidden="true">
+              <svg width="34" height="28" viewBox="0 0 34 28" fill="none">
+                <path d="M5 6L17 18L29 6" stroke="#053C6D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 14L17 22L25 14" stroke="#D95300" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Stage 3 -->
+            <div class="flow-stage stage-navy">
+              <div style="width:100%;">
+                <div class="stage-kicker">03 • RM DEFENSE</div>
+                <div class="stage-main">
+                  Fair to Bank <span style="color:#FF8C42;">•</span> Fair to Customer
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SLIDE 6: EXPANDED 6-QUESTION REVISION QUIZ, ★ RECAP & CONCLUSION
+         ====================================================================== -->
+    <section class="slide" data-slide="5">
+      <div class="slide-inner">
+        <!-- Header Row -->
+        <div class="quiz-header-row">
+          <div>
+            <div class="section-tag">05 • REVISION QUIZ &amp; CONCLUSION</div>
+            <h2 class="slide-title" style="margin-bottom:0;">Quick <span class="accent">Risk Check</span></h2>
+          </div>
+          <div class="quiz-actions">
+            <button id="reveal-answer-btn" class="quiz-action-btn reveal-btn" type="button">✓ Reveal Answer</button>
+            <button id="reset-all-btn" class="quiz-action-btn reset-btn" type="button">↺ Reset All</button>
+          </div>
+        </div>
+
+        <!-- High-Contrast Pill Navigation Strip (Q1–Q6 + ★ Recap + ◀ Prev / Next ▶) -->
+        <div class="quiz-nav-strip">
+          <div class="quiz-tab-group" id="quiz-tab-group" role="tablist" aria-label="Revision Questions">
+            <button type="button" class="quiz-tab-btn is-active" data-qidx="0">Q1<span class="tab-check">✓</span></button>
+            <button type="button" class="quiz-tab-btn" data-qidx="1">Q2<span class="tab-check">✓</span></button>
+            <button type="button" class="quiz-tab-btn" data-qidx="2">Q3<span class="tab-check">✓</span></button>
+            <button type="button" class="quiz-tab-btn" data-qidx="3">Q4<span class="tab-check">✓</span></button>
+            <button type="button" class="quiz-tab-btn" data-qidx="4">Q5<span class="tab-check">✓</span></button>
+            <button type="button" class="quiz-tab-btn" data-qidx="5">Q6<span class="tab-check">✓</span></button>
+            <button type="button" class="quiz-tab-btn" data-qidx="6">★ Recap</button>
+          </div>
+
+          <div class="quiz-step-group">
+            <button type="button" id="quiz-prev-btn" class="quiz-step-btn" title="Previous Question (↑)">◀ Prev</button>
+            <button type="button" id="quiz-next-btn" class="quiz-step-btn" title="Next Question (↓)">Next ▶</button>
+          </div>
+        </div>
+
+        <!-- Main Interactive Question / Recap Container -->
+        <div class="quiz-stage-card">
+          <!-- View 1: Single-Focus Question Card (Q1–Q6) -->
+          <div id="quiz-question-view">
+            <div class="q-meta-row">
+              <span id="q-badge-num" class="mcq-qnum tabular-nums">Q1 / 06</span>
+              <span id="q-topic-pill" class="q-topic-pill">LIQUIDITY &amp; RATE RISK</span>
+            </div>
+
+            <h3 id="q-title-big" class="q-title-big">SVB 48h Crash Trigger?</h3>
+
+            <div id="q-options-grid" class="mcq-options"></div>
+
+            <div id="q-recap-strip" class="recap-strip">
+              <span class="recap-placeholder">Select an option to unlock Key Recap</span>
+            </div>
+          </div>
+
+          <!-- View 2: ★ Recap 2x2 Summary Grid -->
+          <div id="quiz-recap-view" class="recap-grid hidden">
+            <div class="recap-card bar-crimson">
+              <div class="recap-card-head">01 • Liquidity &amp; Rate</div>
+              <div class="recap-card-body">SVB $42B Run • Yes Bank Cap • ICICI LCR Shield</div>
+            </div>
+            <div class="recap-card bar-orange">
+              <div class="recap-card-head">02 • Operational Risk</div>
+              <div class="recap-card-body">PNB ₹11,400 Cr • UCO ₹820 Cr • Branch KYC &amp; Fines</div>
+            </div>
+            <div class="recap-card bar-navy">
+              <div class="recap-card-head">03 • Credit &amp; Governance</div>
+              <div class="recap-card-body">2008 $600B Crash • Videocon Overhaul • Zero Conflict</div>
+            </div>
+            <div class="recap-card bar-emerald">
+              <div class="recap-card-head">04 • RM First Defense</div>
+              <div class="recap-card-body">Strict KYC • Zero Mis-Selling • Fair to Bank &amp; Customer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Full-Width Solid Navy Conclusion Banner (Always Visible on Slide 6) -->
+        <div class="conclusion-banner">
+          <div class="conclusion-left">
+            Manage <span class="orange-word">Risk.</span> Protect <span class="orange-word">Trust.</span>
+          </div>
+          <div class="conclusion-right">THANK YOU</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       HIDDEN PRESENTER REHEARSAL NOTES DRAWER (PRESS 'N' TO TOGGLE)
+       Completely hidden by default so it NEVER shows during classroom delivery.
+       ======================================================================== -->
+  <aside id="notes-drawer" class="notes-drawer" aria-hidden="true">
+    <div class="notes-header">
+      <h3 id="notes-slide-label">SPEAKER CUES • SLIDE 01</h3>
+      <button id="notes-close-btn" class="notes-close" type="button">CLOSE (N)</button>
+    </div>
+    <div id="notes-body" class="notes-body"></div>
+    <div class="notes-shortcuts">
+      KEYS: ← / → / Space (Slides) • F (Fullscreen) • V (Video) • ↑ / ↓ / 1–6 / R (Quiz) • N (Notes)
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       PRESENTATION ENGINE, AUTO-CYCLING OBJECTIVES, 40s CANVAS VIDEO & 6-MCQ
+       ======================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ----------------------------------------------------------------------
+         1. PRESENTER HINGLISH REHEARSAL NOTES DATA (HIDDEN UNLESS 'N' PRESSED)
+         ---------------------------------------------------------------------- */
+      const SPEAKER_NOTES = [
+        {
+          title: 'Slide 1 — Opening Hook (30 sec)',
+          bullets: [
+            'Good morning Sir and everyone. Main Fahad Anwar hoon. Banking sirf deposits lene aur loans dene ka business nahi hai — banking is fundamentally the business of managing risk.',
+            'Aaj hum real-world case studies dekhenge jahan Liquidity, Operational, Credit, aur Interest Rate risks ne bade banks ko hilaa diya — aur as future ICICI Relationship Managers hamare liye kya actionable learnings hain.'
+          ]
+        },
+        {
+          title: 'Slide 2 — Objectives & 5 Risks (30 sec)',
+          bullets: [
+            'Aaj ki presentation 5 focused pillars pe hai: class mein revise hue 5 core risks (Liquidity, Operational, Credit, Market, Interest Rate), major global & Indian bank losses, Macro aur Branch-level Operational risk, ICICI Bank ka turnaround, aur last mein ek 6-question revision quiz.',
+            'Right diagram dekhiye — in paanchon mein se ek bhi risk out of control gaya toh poora Bank Stability hil sakta hai.'
+          ]
+        },
+        {
+          title: 'Slide 3 — Liquidity Risk + 40s Video (1.5 min)',
+          bullets: [
+            'Pehle 40-second animation chalaiye (press V ya Expand Fullscreen click karo): "Is 40-second clip mein dekhiye kaise Interest Rate Risk sirf 48 ghante mein ek giant Liquidity Crisis ban gaya."',
+            'SVB (March 2023): Startup boom mein $189B deposits aaye, unhone long-term US Treasury bonds mein daal diye. Fed ne rates 0.25% se 4.75% badhaye -> bonds ki value giri -> $1.8B loss book hua -> 1 din mein $42B withdrawal run -> 48 hours mein collapse. (Source: McKinsey & JP Morgan ALM mismatch reports).',
+            'Yes Bank (March 2020): Bad corporate loans (IL&FS, DHFL) se confidence toota -> Liquidity crunch -> RBI ₹50,000 moratorium. Bonus ICICI fact: ICICI Bank ne ₹1,000 crore invest karke rescue consortium mein system stabilize kiya.',
+            'ICICI Bank (2008): Lehman collapse ke time rumors faile, actual UK exposure sirf ~$80M tha. Strong Liquidity Coverage Ratio (LCR) aur transparent communication ne ICICI ko bilkul safe rakha.'
+          ]
+        },
+        {
+          title: 'Slide 4 — Operational Risk Macro & Micro (1.5 min)',
+          bullets: [
+            'Operational risk = People, Process, Systems, ya External events ka failure. Do levels dekhte hain:',
+            'Macro Level: PNB (2018) mein SWIFT aur CBS integrate na hone se ₹11,400+ Cr fraud hua. UCO Bank (Nov 2023) mein IMPS technical glitch se ₹820 Cr galat credit ho gaye. HDFC Bank (2020–22) ko repeated IT outages ke kaaran RBI ne 8 mahine credit cards aur 15 mahine digital launches pe ban lagaya (opportunity loss).',
+            'Micro / Branch Level: RBI ne Oct 2023 mein regulatory/compliance lapses pe ICICI par ₹12.19 Cr penalty lagayi. Daily RM level par fake KYC accept karna, signature mismatch miss karna, ya Maker-Checker bypass karna chhote dikhte hain par bade operational losses ban jaate hain. (Cite: PwC Fraud Survey & Deloitte Banking Outlook).'
+          ]
+        },
+        {
+          title: 'Slide 5 — Credit Risk & ICICI Turnaround (1 min)',
+          bullets: [
+            '2008 Subprime Crash (Lehman Brothers, $600B+ bankruptcy): Weak credit checks ne poori global economy mein Market aur Liquidity crisis bana diya.',
+            'ICICI Bank Learning (Videocon Case): ~₹3,250 Cr ka corporate loan NPA aur governance conflict ek bada past shock tha. Isse criticize nahi karna — isse turnaround ki tarah frame karo!',
+            'ICICI Overhaul: Is learning ke baad ICICI ne strict credit underwriting, independent risk oversight, aur zero-conflict governance build ki. Aaj ICICI industry ke strongest asset quality aur lowest Net NPAs mein hai.',
+            'RM Defense: "Fair to Bank, Fair to Customer" — as RMs hum First Line of Defense hain (genuine profiling, strict KYC, zero mis-selling).'
+          ]
+        },
+        {
+          title: 'Slide 6 — 6-Question Revision Quiz & ★ Recap (1.5 min)',
+          bullets: [
+            'Keys 1–6 ya ↑/↓ se questions switch karo, har answer pe Key Recap unlock hoga:',
+            'Q1 SVB 48h Crash Trigger -> B) Rate Hike (Fed 0.25%→4.75% → -$1.8B Bond Loss → $42B 1-Day Run).',
+            'Q2 Yes Bank Crisis Action -> B) RBI Moratorium (₹50K cap; ICICI invested ₹1,000 Cr in rescue).',
+            'Q3 ICICI 2008 Rumor Shield -> A) Strong LCR (~$80M actual exposure; strong LCR kept ICICI safe).',
+            'Q4 PNB ₹11,400 Cr Root Cause -> A) SWIFT-CBS Gap (unauthorized LoUs bypassed Core Banking).',
+            'Q5 UCO ₹820 Cr Error Type -> C) Operational Risk (IMPS glitch macro + HDFC IT ban + micro KYC/fines).',
+            'Q6 First Line of Risk Defense -> C) Relationship Manager (Fair to Bank, Fair to Customer).',
+            'Press R (ya click ★ Recap) for quick 4-card summary, then close: "Profits quarterly aate hain, par ek single risk failure saalon ka trust mita sakta hai. Manage Risk. Protect Trust. Thank you!"'
+          ]
+        }
+      ];
+
+      /* ----------------------------------------------------------------------
+         2. SLIDE NAVIGATION ENGINE
+         ---------------------------------------------------------------------- */
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const totalSlides = slides.length;
+      let currentSlide = 0;
+
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const progressFill = document.getElementById('top-progress-fill');
+      const slideCounter = document.getElementById('slide-counter');
+      const fullscreenBtn = document.getElementById('fullscreen-btn');
+      const fsEnter = document.getElementById('fs-icon-enter');
+      const fsExit = document.getElementById('fs-icon-exit');
+
+      const notesDrawer = document.getElementById('notes-drawer');
+      const notesSlideLabel = document.getElementById('notes-slide-label');
+      const notesBody = document.getElementById('notes-body');
+      const notesCloseBtn = document.getElementById('notes-close-btn');
+
+      function updateNotesPanel() {
+        const data = SPEAKER_NOTES[currentSlide];
+        notesSlideLabel.textContent = `SPEAKER CUES • SLIDE 0${currentSlide + 1}`;
+        notesBody.innerHTML =
+          `<h4>${data.title}</h4><ul>` +
+          data.bullets.map((b) => `<li>${b}</li>`).join('') +
+          `</ul>`;
+      }
+
+      function toggleNotes(forceClose) {
+        const isOpen = notesDrawer.classList.contains('is-open');
+        const nextState = forceClose === true ? false : !isOpen;
+        notesDrawer.classList.toggle('is-open', nextState);
+        notesDrawer.setAttribute('aria-hidden', String(!nextState));
+      }
+
+      notesCloseBtn.addEventListener('click', () => toggleNotes(true));
+
+      function goToSlide(targetIndex) {
+        if (targetIndex < 0 || targetIndex >= totalSlides || targetIndex === currentSlide) {
+          return;
+        }
+
+        // Pause video automatically if navigating away from Slide 3
+        if (currentSlide === 2 && targetIndex !== 2) {
+          svbVideo.pause();
+          if (svbVideo.isExpanded) svbVideo.toggleExpand(false);
+        }
+
+        const goingForward = targetIndex > currentSlide;
+        const outgoing = slides[currentSlide];
+        const incoming = slides[targetIndex];
+
+        outgoing.classList.remove('active');
+        outgoing.classList.toggle('exiting-left', goingForward);
+
+        incoming.classList.remove('exiting-left');
+        incoming.classList.add('active');
+        incoming.scrollTop = 0;
+
+        currentSlide = targetIndex;
+        updateChrome();
+        updateNotesPanel();
+
+        // Ensure canvas resizes cleanly when arriving on Slide 3
+        if (currentSlide === 2) {
+          requestAnimationFrame(() => svbVideo.resizeAndDraw());
+        }
+      }
+
+      function updateChrome() {
+        slideCounter.textContent = `0${currentSlide + 1} / 0${totalSlides}`;
+        progressFill.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === totalSlides - 1;
+      }
+
+      prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+      nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+      function toggleBrowserFullscreen() {
+        try {
+          if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+          } else {
+            document.exitFullscreen();
+          }
+        } catch (err) {
+          // Safely ignore if blocked by embedded iframe permissions
+        }
+      }
+
+      fullscreenBtn.addEventListener('click', toggleBrowserFullscreen);
+      document.addEventListener('fullscreenchange', () => {
+        const isFs = Boolean(document.fullscreenElement);
+        fsEnter.classList.toggle('hidden', isFs);
+        fsExit.classList.toggle('hidden', !isFs);
+        setTimeout(() => svbVideo.resizeAndDraw(), 120);
+      });
+
+      /* ----------------------------------------------------------------------
+         3. SLIDE 2: AUTO-CYCLING OBJECTIVES & SYNCED HUB-AND-SPOKE HIGHLIGHT
+         ---------------------------------------------------------------------- */
+      const objItems = Array.from(document.querySelectorAll('#objectives-list .obj-item'));
+      let objActiveIdx = 0;
+      let objHoverPaused = false;
+
+      function highlightObjectiveAndHub(idx) {
+        objActiveIdx = idx;
+        objItems.forEach((el, i) => {
+          el.classList.toggle('is-active', i === idx);
+        });
+
+        for (let i = 0; i < 5; i++) {
+          const node = document.getElementById(`hub-node-${i}`);
+          const spoke = document.getElementById(`spoke-${i}`);
+          if (!node || !spoke) continue;
+          const rect = node.querySelector('rect');
+          const text = node.querySelector('text');
+          const isHot = i === idx;
+
+          rect.setAttribute('fill', isHot ? '#D95300' : '#FFFFFF');
+          rect.setAttribute('stroke', isHot ? '#090D16' : '#053C6D');
+          text.setAttribute('fill', isHot ? '#FFFFFF' : '#090D16');
+          spoke.setAttribute('stroke', isHot ? '#D95300' : '#053C6D');
+          spoke.setAttribute('stroke-width', isHot ? '6' : '4.5');
+        }
+      }
+
+      objItems.forEach((item, idx) => {
+        item.addEventListener('mouseenter', () => {
+          objHoverPaused = true;
+          highlightObjectiveAndHub(idx);
+        });
+        item.addEventListener('mouseleave', () => {
+          objHoverPaused = false;
+        });
+        item.addEventListener('click', () => {
+          highlightObjectiveAndHub(idx);
+        });
+      });
+
+      setInterval(() => {
+        if (currentSlide === 1 && !objHoverPaused) {
+          highlightObjectiveAndHub((objActiveIdx + 1) % 5);
+        }
+      }, 3000);
+
+      /* ----------------------------------------------------------------------
+         4. SLIDE 3: CUSTOM 40-SECOND OFFLINE ANIMATED VIDEO PLAYER (60FPS CANVAS)
+         High-contrast vector motion graphics for daylight projector visibility.
+         ---------------------------------------------------------------------- */
+      const svbVideo = (function () {
+        const DURATION = 40.0;
+        const LOGICAL_W = 960;
+        const LOGICAL_H = 540;
+
+        const shell = document.getElementById('video-shell');
+        const viewport = document.getElementById('video-viewport');
+        const canvas = document.getElementById('svb-canvas');
+        const ctx = canvas.getContext('2d');
+
+        const posterOverlay = document.getElementById('poster-overlay');
+        const posterPlayBtn = document.getElementById('poster-play-btn');
+        const playBtn = document.getElementById('v-play-btn');
+        const replayBtn = document.getElementById('v-replay-btn');
+        const scrubber = document.getElementById('v-scrubber');
+        const scrubberFill = document.getElementById('v-scrubber-fill');
+        const timerEl = document.getElementById('v-timer');
+        const expandBtn = document.getElementById('video-expand-btn');
+        const expandLabel = document.getElementById('expand-btn-label');
+
+        let currentTime = 0;
+        let isPlaying = false;
+        let hasStarted = false;
+        let isExpanded = false;
+        let lastFrameTs = null;
+        let rafId = null;
+
+        const clamp01 = (v) => Math.max(0, Math.min(1, v));
+        const seg = (t, a, b) => clamp01((t - a) / (b - a));
+        const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
+        const easeOutBack = (x) => {
+          const c1 = 1.70158;
+          const c3 = c1 + 1;
+          return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+        };
+
+        function formatSec(s) {
+          const whole = Math.min(40, Math.floor(s));
+          return `00:${String(whole).padStart(2, '0')}`;
+        }
+
+        function drawRoundRect(x, y, w, h, r) {
+          ctx.beginPath();
+          ctx.moveTo(x + r, y);
+          ctx.lineTo(x + w - r, y);
+          ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+          ctx.lineTo(x + w, y + h - r);
+          ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+          ctx.lineTo(x + r, y + h);
+          ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+          ctx.lineTo(x, y + r);
+          ctx.quadraticCurveTo(x, y, x + r, y);
+          ctx.closePath();
+        }
+
+        function fillAndStrokeBox(x, y, w, h, r, fill, stroke, lw = 3.5) {
+          drawRoundRect(x, y, w, h, r);
+          if (fill) {
+            ctx.fillStyle = fill;
+            ctx.fill();
+          }
+          if (stroke) {
+            ctx.strokeStyle = stroke;
+            ctx.lineWidth = lw;
+            ctx.stroke();
+          }
+        }
+
+        function drawThickArrow(x1, y1, x2, y2, color, lw = 7, head = 18) {
+          const angle = Math.atan2(y2 - y1, x2 - x1);
+          ctx.strokeStyle = color;
+          ctx.fillStyle = color;
+          ctx.lineWidth = lw;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2 - Math.cos(angle) * (head * 0.65), y2 - Math.sin(angle) * (head * 0.65));
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(x2, y2);
+          ctx.lineTo(x2 - head * Math.cos(angle - Math.PI / 6), y2 - head * Math.sin(angle - Math.PI / 6));
+          ctx.lineTo(x2 - head * Math.cos(angle + Math.PI / 6), y2 - head * Math.sin(angle + Math.PI / 6));
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        function drawChapterHeader(pillText, pillColor, mainTitle, rightTag) {
+          ctx.fillStyle = '#F1F5F9';
+          ctx.fillRect(0, 0, LOGICAL_W, 84);
+          ctx.fillStyle = '#053C6D';
+          ctx.fillRect(0, 81, LOGICAL_W, 4);
+
+          fillAndStrokeBox(28, 18, 174, 44, 8, pillColor, null);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '800 18px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(pillText, 115, 41);
+
+          ctx.fillStyle = '#090D16';
+          ctx.font = '900 36px "Plus Jakarta Sans", sans-serif';
+          ctx.textAlign = 'left';
+          ctx.fillText(mainTitle, 222, 42);
+
+          fillAndStrokeBox(752, 18, 180, 44, 8, '#FFFFFF', '#053C6D', 3);
+          ctx.fillStyle = '#053C6D';
+          ctx.font = '800 20px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(rightTag, 842, 41);
+        }
+
+        function drawBottomChapterStrip(t) {
+          const y = 492;
+          const h = 48;
+          ctx.fillStyle = '#F1F5F9';
+          ctx.fillRect(0, y, LOGICAL_W, h);
+          ctx.fillStyle = '#053C6D';
+          ctx.fillRect(0, y, LOGICAL_W, 3);
+
+          const chapters = [
+            { label: '1. DEPOSIT SURGE', start: 0, end: 10, color: '#053C6D' },
+            { label: '2. RATE SHOCK', start: 10, end: 20, color: '#D95300' },
+            { label: '3. 48h BANK RUN', start: 20, end: 32, color: '#B91C1C' },
+            { label: '4. BANKING LESSON', start: 32, end: 40, color: '#047857' }
+          ];
+
+          const segW = LOGICAL_W / 4;
+          chapters.forEach((ch, i) => {
+            const x = i * segW;
+            const active = t >= ch.start && (t < ch.end || (i === 3 && t <= 40));
+            const done = t >= ch.end;
+
+            if (active || done) {
+              const pct = done ? 1 : seg(t, ch.start, ch.end);
+              ctx.fillStyle = active ? ch.color : '#CBD5E1';
+              ctx.fillRect(x, y + 3, segW * pct, h - 3);
+            }
+
+            if (i > 0) {
+              ctx.fillStyle = '#053C6D';
+              ctx.fillRect(x, y, 2.5, h);
+            }
+
+            ctx.font = '800 15px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = active ? '#FFFFFF' : '#090D16';
+            ctx.fillText(ch.label, x + segW / 2, y + h / 2 + 2);
+          });
+        }
+
+        function drawPosterFrame() {
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+
+          ctx.strokeStyle = '#E2E8F0';
+          ctx.lineWidth = 2;
+          for (let gx = 80; gx < LOGICAL_W; gx += 80) {
+            ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, LOGICAL_H); ctx.stroke();
+          }
+          for (let gy = 80; gy < LOGICAL_H; gy += 80) {
+            ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(LOGICAL_W, gy); ctx.stroke();
+          }
+
+          ctx.fillStyle = '#053C6D';
+          ctx.fillRect(0, 0, LOGICAL_W, 14);
+          ctx.fillStyle = '#D95300';
+          ctx.fillRect(0, 0, 260, 14);
+
+          fillAndStrokeBox(280, 42, 400, 46, 10, '#F1F5F9', '#053C6D', 3);
+          ctx.fillStyle = '#053C6D';
+          ctx.font = '800 20px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('4-CHAPTER VISUAL EXPLAINER', LOGICAL_W / 2, 66);
+
+          ctx.fillStyle = '#090D16';
+          ctx.font = '900 54px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText('SVB: 48-HOUR COLLAPSE', LOGICAL_W / 2, 148);
+
+          const stats = [
+            { x: 64, label: 'DEPOSITS', val: '$189B', col: '#053C6D' },
+            { x: 356, label: 'BOND LOSS', val: '-$1.8B', col: '#D95300' },
+            { x: 648, label: '1-DAY RUN', val: '$42B', col: '#B91C1C' }
+          ];
+          stats.forEach((st) => {
+            fillAndStrokeBox(st.x, 382, 248, 106, 12, '#FFFFFF', st.col, 4);
+            ctx.fillStyle = st.col;
+            ctx.font = '800 18px "JetBrains Mono", monospace';
+            ctx.fillText(st.label, st.x + 124, 412);
+            ctx.fillStyle = '#090D16';
+            ctx.font = '900 42px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(st.val, st.x + 124, 456);
+          });
+        }
+
+        function drawScene1(t) {
+          drawChapterHeader('CHAPTER 1 / 4', '#053C6D', '1. DEPOSIT SURGE', '2020 – 2022');
+
+          const fillP = easeOutCubic(seg(t, 0.5, 4.8));
+          const arrowP = easeOutCubic(seg(t, 3.0, 5.5));
+          const bondP = easeOutCubic(seg(t, 4.2, 8.2));
+          const warnP = easeOutBack(seg(t, 7.0, 8.4));
+
+          fillAndStrokeBox(52, 114, 310, 344, 14, '#F1F5F9', '#053C6D', 4.5);
+          ctx.fillStyle = '#053C6D';
+          ctx.font = '900 24px "Plus Jakarta Sans", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('SVB VAULT', 207, 146);
+
+          fillAndStrokeBox(82, 168, 250, 210, 10, '#FFFFFF', '#090D16', 3.5);
+          const totalBars = 6;
+          for (let i = 0; i < totalBars; i++) {
+            const barProg = clamp01(fillP * totalBars - i);
+            if (barProg > 0) {
+              const barH = 26;
+              const by = 344 - i * 32;
+              fillAndStrokeBox(96, by, 222 * barProg, barH, 6, i >= 4 ? '#047857' : '#053C6D', '#090D16', 2);
+            }
+          }
+
+          const depVal = Math.round(62 + 127 * fillP);
+          fillAndStrokeBox(82, 392, 250, 52, 10, '#053C6D', null);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '900 28px "JetBrains Mono", monospace';
+          ctx.fillText(`$${depVal}B Deposits`, 207, 420);
+
+          if (arrowP > 0) {
+            const pulse = Math.sin(t * 7) * 8;
+            ctx.save();
+            ctx.globalAlpha = Math.min(1, arrowP);
+            drawThickArrow(382, 238, 430 + 115 * arrowP + pulse * 0.4, 238, '#D95300', 10, 24);
+            drawThickArrow(382, 298, 430 + 115 * arrowP + pulse * 0.4, 298, '#D95300', 10, 24);
+            ctx.fillStyle = '#D95300';
+            ctx.font = '900 20px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('INVESTED IN', 466, 200);
+            ctx.restore();
+          }
+
+          fillAndStrokeBox(578, 114, 330, 344, 14, '#F1F5F9', '#053C6D', 4.5);
+          ctx.fillStyle = '#090D16';
+          ctx.font = '900 25px "Plus Jakarta Sans", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('LONG-TERM BONDS', 743, 146);
+
+          const bondCount = 5;
+          for (let b = 0; b < bondCount; b++) {
+            const bp = easeOutCubic(clamp01(bondP * bondCount - b));
+            if (bp > 0) {
+              const yPos = 382 - b * 46 + (1 - bp) * 30;
+              fillAndStrokeBox(612, yPos, 262, 38, 8, '#FFFFFF', '#053C6D', 3.5);
+              ctx.fillStyle = '#D95300';
+              ctx.fillRect(612, yPos, 16, 38);
+              ctx.fillStyle = '#090D16';
+              ctx.font = '800 18px "JetBrains Mono", monospace';
+              ctx.fillText('10-YR US TREASURY', 750, yPos + 20);
+            }
+          }
+
+          if (t >= 7.0) {
+            ctx.save();
+            ctx.translate(743, 432);
+            ctx.scale(warnP, warnP);
+            fillAndStrokeBox(-136, -24, 272, 48, 8, '#D95300', '#090D16', 3);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '900 21px "Plus Jakarta Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('LOCKED LOW YIELD', 0, 2);
+            ctx.restore();
+          }
+        }
+
+        function drawScene2(t) {
+          drawChapterHeader('CHAPTER 2 / 4', '#D95300', '2. RATE HIKE SHOCK', '2022 – 2023');
+
+          const stepP = easeOutCubic(seg(t, 10.4, 15.0));
+          const crashP = easeOutCubic(seg(t, 12.2, 16.5));
+          const stampP = easeOutBack(seg(t, 16.0, 17.3));
+
+          fillAndStrokeBox(42, 112, 412, 348, 14, '#FFFFFF', '#090D16', 4);
+          ctx.fillStyle = '#B91C1C';
+          ctx.font = '900 23px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText('FED RATES: 0.25% → 4.75%', 248, 146);
+
+          ctx.strokeStyle = '#090D16';
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.moveTo(82, 180); ctx.lineTo(82, 412); ctx.lineTo(426, 412);
+          ctx.stroke();
+
+          const steps = [
+            { label: '0.25%', h: 36 },
+            { label: '1.50%', h: 92 },
+            { label: '3.00%', h: 152 },
+            { label: '4.75%', h: 212 }
+          ];
+          steps.forEach((st, i) => {
+            const sp = clamp01(stepP * 4 - i);
+            if (sp > 0) {
+              const bx = 102 + i * 78;
+              const bh = st.h * sp;
+              fillAndStrokeBox(bx, 412 - bh, 60, bh, 6, i === 3 ? '#B91C1C' : '#D95300', '#090D16', 3);
+              ctx.fillStyle = '#090D16';
+              ctx.font = '800 17px "JetBrains Mono", monospace';
+              ctx.fillText(st.label, bx + 30, 412 - bh - 16);
+            }
+          });
+
+          drawThickArrow(462, 286, 506, 286, '#B91C1C', 10, 20);
+
+          fillAndStrokeBox(514, 112, 404, 348, 14, '#FFFFFF', '#090D16', 4);
+          ctx.fillStyle = '#053C6D';
+          ctx.font = '900 24px "Plus Jakarta Sans", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('BOND MARKET VALUE', 716, 146);
+
+          ctx.strokeStyle = '#CBD5E1';
+          ctx.lineWidth = 2.5;
+          for (let gy = 200; gy <= 380; gy += 60) {
+            ctx.beginPath(); ctx.moveTo(548, gy); ctx.lineTo(886, gy); ctx.stroke();
+          }
+
+          const pts = [
+            [552, 205],
+            [620, 212],
+            [688, 254],
+            [760, 326],
+            [876, 406]
+          ];
+          ctx.strokeStyle = '#B91C1C';
+          ctx.lineWidth = 8;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          ctx.moveTo(pts[0][0], pts[0][1]);
+          const totalSegs = pts.length - 1;
+          const drawn = crashP * totalSegs;
+          let lastX = pts[0][0];
+          let lastY = pts[0][1];
+          for (let i = 0; i < totalSegs; i++) {
+            const local = clamp01(drawn - i);
+            if (local > 0) {
+              const nx = pts[i][0] + (pts[i + 1][0] - pts[i][0]) * local;
+              const ny = pts[i][1] + (pts[i + 1][1] - pts[i][1]) * local;
+              ctx.lineTo(nx, ny);
+              lastX = nx;
+              lastY = ny;
+            }
+          }
+          ctx.stroke();
+
+          ctx.fillStyle = '#B91C1C';
+          ctx.beginPath();
+          ctx.arc(lastX, lastY, 10, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (t >= 16.0) {
+            ctx.save();
+            ctx.translate(716, 294);
+            ctx.rotate(-0.08);
+            ctx.scale(stampP, stampP);
+            fillAndStrokeBox(-162, -40, 324, 80, 12, '#FEF2F2', '#B91C1C', 5.5);
+            ctx.fillStyle = '#B91C1C';
+            ctx.font = '900 32px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('-$1.8B BOND LOSS', 0, 2);
+            ctx.restore();
+          }
+        }
+
+        function drawScene3(t) {
+          drawChapterHeader('CHAPTER 3 / 4', '#B91C1C', '3. 48-HOUR BANK RUN', 'MARCH 2023');
+
+          const drainP = easeOutCubic(seg(t, 20.6, 29.2));
+          const stampP = easeOutBack(seg(t, 28.8, 30.0));
+
+          const hoursLeft = Math.max(0, Math.round(48 * (1 - drainP)));
+          const clockAlert = hoursLeft <= 14;
+          fillAndStrokeBox(46, 114, 240, 110, 14, clockAlert ? '#FEF2F2' : '#F1F5F9', clockAlert ? '#B91C1C' : '#053C6D', 4.5);
+          ctx.fillStyle = clockAlert ? '#B91C1C' : '#053C6D';
+          ctx.font = '800 17px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText('COUNTDOWN TIMER', 166, 144);
+          ctx.fillStyle = clockAlert ? '#B91C1C' : '#090D16';
+          ctx.font = '900 48px "JetBrains Mono", monospace';
+          ctx.fillText(`${String(hoursLeft).padStart(2, '0')}h LEFT`, 166, 194);
+
+          fillAndStrokeBox(46, 246, 240, 212, 14, '#FFFFFF', '#B91C1C', 4);
+          ctx.fillStyle = '#B91C1C';
+          ctx.font = '900 22px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText('DEPOSITOR PANIC', 166, 286);
+          ctx.fillStyle = '#090D16';
+          ctx.font = '900 36px "JetBrains Mono", monospace';
+          ctx.fillText('$42B', 166, 344);
+          ctx.font = '800 22px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText('IN 1 DAY', 166, 384);
+          fillAndStrokeBox(72, 404, 188, 36, 8, '#B91C1C', null);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '800 16px "JetBrains Mono", monospace';
+          ctx.fillText('DIGITAL BANK RUN', 166, 423);
+
+          const tankX = 332, tankY = 122, tankW = 248, tankH = 336;
+          fillAndStrokeBox(tankX, tankY, tankW, tankH, 16, '#FFFFFF', '#090D16', 5);
+
+          const levelPct = Math.max(0, 1 - drainP);
+          const liquidH = (tankH - 16) * levelPct;
+          if (liquidH > 2) {
+            ctx.save();
+            drawRoundRect(tankX + 8, tankY + 8, tankW - 16, tankH - 16, 10);
+            ctx.clip();
+            ctx.fillStyle = levelPct < 0.45 ? '#B91C1C' : '#D95300';
+            ctx.fillRect(tankX + 8, tankY + tankH - 8 - liquidH, tankW - 16, liquidH);
+            ctx.restore();
+          }
+
+          ctx.fillStyle = '#090D16';
+          ctx.font = '900 22px "Plus Jakarta Sans", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('LIQUIDITY TANK', tankX + tankW / 2, 154);
+
+          fillAndStrokeBox(tankX + 54, 266, 140, 56, 10, '#FFFFFF', '#090D16', 3.5);
+          ctx.fillStyle = levelPct < 0.35 ? '#B91C1C' : '#090D16';
+          ctx.font = '900 32px "JetBrains Mono", monospace';
+          ctx.fillText(`${Math.round(levelPct * 100)}%`, tankX + tankW / 2, 296);
+
+          const pulseX = (t * 90) % 34;
+          [190, 286, 382].forEach((ay) => {
+            drawThickArrow(600, ay, 710 + pulseX, ay, '#B91C1C', 10, 22);
+          });
+
+          fillAndStrokeBox(752, 176, 174, 220, 14, '#FEF2F2', '#B91C1C', 4.5);
+          ctx.fillStyle = '#B91C1C';
+          ctx.font = '900 24px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText('CASH', 839, 232);
+          ctx.fillText('OUTFLOW', 839, 266);
+          ctx.fillStyle = '#090D16';
+          ctx.font = '900 34px "JetBrains Mono", monospace';
+          ctx.fillText('$42B', 839, 326);
+          ctx.font = '800 18px "JetBrains Mono", monospace';
+          ctx.fillText('/ 24 HRS', 839, 360);
+
+          if (t >= 28.8) {
+            ctx.save();
+            ctx.translate(456, 292);
+            ctx.rotate(-0.12);
+            ctx.scale(stampP, stampP);
+            fillAndStrokeBox(-232, -56, 464, 112, 14, '#B91C1C', '#090D16', 6);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '900 44px "Plus Jakarta Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('BANK COLLAPSED', 0, -4);
+            ctx.font = '800 20px "JetBrains Mono", monospace';
+            ctx.fillStyle = '#FDE68A';
+            ctx.fillText('CLOSED IN 48 HOURS', 0, 34);
+            ctx.restore();
+          }
+        }
+
+        function drawScene4(t) {
+          drawChapterHeader('CHAPTER 4 / 4', '#047857', '4. BANKING LESSON', 'RISK DEFENSE');
+
+          const shieldP = easeOutBack(seg(t, 32.2, 33.8));
+          const b1 = easeOutCubic(seg(t, 33.0, 34.4));
+          const b2 = easeOutCubic(seg(t, 34.3, 35.7));
+          const b3 = easeOutCubic(seg(t, 35.6, 37.0));
+
+          ctx.save();
+          ctx.translate(226, 286);
+          ctx.scale(shieldP, shieldP);
+
+          ctx.beginPath();
+          ctx.moveTo(0, -148);
+          ctx.lineTo(126, -100);
+          ctx.lineTo(126, 4);
+          ctx.bezierCurveTo(126, 86, 68, 134, 0, 158);
+          ctx.bezierCurveTo(-68, 134, -126, 86, -126, 4);
+          ctx.lineTo(-126, -100);
+          ctx.closePath();
+          ctx.fillStyle = '#053C6D';
+          ctx.fill();
+          ctx.lineWidth = 8;
+          ctx.strokeStyle = '#D95300';
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(0, -14, 54, 0, Math.PI * 2);
+          ctx.fillStyle = '#047857';
+          ctx.fill();
+          ctx.lineWidth = 5;
+          ctx.strokeStyle = '#FFFFFF';
+          ctx.stroke();
+
+          ctx.strokeStyle = '#FFFFFF';
+          ctx.lineWidth = 10;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          ctx.moveTo(-24, -12);
+          ctx.lineTo(-6, 8);
+          ctx.lineTo(28, -28);
+          ctx.stroke();
+
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '900 22px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText('RESILIENT BANK', 0, 86);
+          ctx.restore();
+
+          const badges = [
+            { p: b1, y: 122, num: '01', title: 'ALM Balance', sub: 'MATCH MATURITY', bg: '#F1F5F9', border: '#053C6D', accent: '#053C6D' },
+            { p: b2, y: 234, num: '02', title: 'ICICI 2008 Safe', sub: 'SURVIVED RUMORS', bg: '#FFF3EB', border: '#D95300', accent: '#D95300' },
+            { p: b3, y: 346, num: '03', title: 'Strong LCR', sub: 'BASEL III SHIELD', bg: '#ECFDF5', border: '#047857', accent: '#047857' }
+          ];
+
+          badges.forEach((bd) => {
+            if (bd.p <= 0) return;
+            const slideX = 416 + (1 - bd.p) * 90;
+            ctx.save();
+            ctx.globalAlpha = Math.min(1, bd.p);
+            fillAndStrokeBox(slideX, bd.y, 496, 92, 14, bd.bg, bd.border, 4.5);
+
+            fillAndStrokeBox(slideX + 18, bd.y + 18, 58, 56, 10, bd.accent, null);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '900 24px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(bd.num, slideX + 47, bd.y + 48);
+
+            ctx.fillStyle = '#090D16';
+            ctx.font = '900 32px "Plus Jakarta Sans", sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(bd.title, slideX + 94, bd.y + 40);
+
+            ctx.fillStyle = bd.accent;
+            ctx.font = '800 17px "JetBrains Mono", monospace';
+            ctx.fillText(bd.sub, slideX + 94, bd.y + 72);
+            ctx.restore();
+          });
+        }
+
+        function drawFrame(t) {
+          const rect = viewport.getBoundingClientRect();
+          if (rect.width === 0 || rect.height === 0) return;
+
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          const cw = Math.round(rect.width * dpr);
+          const ch = Math.round(rect.height * dpr);
+          if (canvas.width !== cw || canvas.height !== ch) {
+            canvas.width = cw;
+            canvas.height = ch;
+          }
+
+          ctx.save();
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, cw, ch);
+
+          const scale = Math.min(cw / LOGICAL_W, ch / LOGICAL_H);
+          const offsetX = (cw - LOGICAL_W * scale) / 2;
+          const offsetY = (ch - LOGICAL_H * scale) / 2;
+          ctx.translate(offsetX, offsetY);
+          ctx.scale(scale, scale);
+
+          if (!hasStarted && t === 0) {
+            drawPosterFrame();
+          } else {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+
+            if (t < 10) {
+              drawScene1(t);
+            } else if (t < 20) {
+              drawScene2(t);
+            } else if (t < 32) {
+              drawScene3(t);
+            } else {
+              drawScene4(t);
+            }
+            drawBottomChapterStrip(t);
+          }
+
+          ctx.restore();
+        }
+
+        function syncControlsUI() {
+          const pct = (currentTime / DURATION) * 100;
+          scrubberFill.style.width = `${pct}%`;
+          scrubber.setAttribute('aria-valuenow', String(Math.floor(currentTime)));
+          timerEl.textContent = `${formatSec(currentTime)} / 00:40`;
+          playBtn.textContent = isPlaying ? '❚❚ Pause' : (currentTime >= DURATION ? '↺ Replay' : '▶ Play');
+          posterOverlay.classList.toggle('hidden-overlay', hasStarted);
+        }
+
+        function tick(ts) {
+          if (!isPlaying) return;
+          if (lastFrameTs === null) lastFrameTs = ts;
+          const dt = (ts - lastFrameTs) / 1000;
+          lastFrameTs = ts;
+
+          currentTime += dt;
+          if (currentTime >= DURATION) {
+            currentTime = DURATION;
+            isPlaying = false;
+            lastFrameTs = null;
+          }
+
+          drawFrame(currentTime);
+          syncControlsUI();
+
+          if (isPlaying) {
+            rafId = requestAnimationFrame(tick);
+          }
+        }
+
+        function play() {
+          hasStarted = true;
+          if (currentTime >= DURATION) {
+            currentTime = 0;
+          }
+          if (!isPlaying) {
+            isPlaying = true;
+            lastFrameTs = null;
+            syncControlsUI();
+            rafId = requestAnimationFrame(tick);
+          }
+        }
+
+        function pause() {
+          isPlaying = false;
+          lastFrameTs = null;
+          if (rafId) cancelAnimationFrame(rafId);
+          syncControlsUI();
+          drawFrame(currentTime);
+        }
+
+        function togglePlay() {
+          if (isPlaying) pause();
+          else play();
+        }
+
+        function replay() {
+          hasStarted = true;
+          currentTime = 0;
+          isPlaying = true;
+          lastFrameTs = null;
+          syncControlsUI();
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(tick);
+        }
+
+        function seekToRatio(ratio) {
+          hasStarted = true;
+          currentTime = clamp01(ratio) * DURATION;
+          syncControlsUI();
+          drawFrame(currentTime);
+        }
+
+        function toggleExpand(forceState) {
+          isExpanded = typeof forceState === 'boolean' ? forceState : !isExpanded;
+          shell.classList.toggle('is-expanded', isExpanded);
+          expandLabel.textContent = isExpanded ? '✕ CLOSE FULLSCREEN' : '⛶ EXPAND FULLSCREEN';
+          requestAnimationFrame(() => drawFrame(currentTime));
+        }
+
+        posterPlayBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          play();
+        });
+        posterOverlay.addEventListener('click', () => play());
+        canvas.addEventListener('click', () => togglePlay());
+        playBtn.addEventListener('click', () => togglePlay());
+        replayBtn.addEventListener('click', () => replay());
+        expandBtn.addEventListener('click', () => toggleExpand());
+
+        scrubber.addEventListener('click', (e) => {
+          const rect = scrubber.getBoundingClientRect();
+          seekToRatio((e.clientX - rect.left) / rect.width);
+        });
+
+        window.addEventListener('resize', () => drawFrame(currentTime));
+
+        return {
+          play,
+          pause,
+          togglePlay,
+          toggleExpand,
+          get isExpanded() { return isExpanded; },
+          resizeAndDraw: () => {
+            syncControlsUI();
+            drawFrame(currentTime);
+          }
+        };
+      })();
+
+      /* ----------------------------------------------------------------------
+         5. SLIDE 6: EXPANDED 6-QUESTION REVISION QUIZ + ★ RECAP CONTROLLER
+         ---------------------------------------------------------------------- */
+      const QUIZ_DATA = [
+        {
+          topic: 'LIQUIDITY & RATE RISK',
+          question: 'SVB 48h Crash Trigger?',
+          options: [
+            { label: 'A) Cyber Attack', correct: false },
+            { label: 'B) Rate Hike', correct: true },
+            { label: 'C) Staff Fraud', correct: false }
+          ],
+          recap: 'Fed Rate Hike (0.25% → 4.75%) → -$1.8B Bond Loss → $42B 1-Day Bank Run'
+        },
+        {
+          topic: 'LIQUIDITY & CREDIT',
+          question: 'Yes Bank Crisis Action?',
+          options: [
+            { label: 'A) Bank Merger', correct: false },
+            { label: 'B) RBI Moratorium', correct: true },
+            { label: 'C) Rate Cut', correct: false }
+          ],
+          recap: 'Bad Corporate Loans → Liquidity Crunch → ₹50K RBI Cap (ICICI Invested ₹1,000 Cr)'
+        },
+        {
+          topic: 'ICICI RESILIENCE',
+          question: 'ICICI 2008 Rumor Shield?',
+          options: [
+            { label: 'A) Strong LCR', correct: true },
+            { label: 'B) Govt Bailout', correct: false },
+            { label: 'C) Loan Freeze', correct: false }
+          ],
+          recap: '2008 Lehman Panic → Only ~$80M Exposure → Strong LCR Reserves Kept ICICI Safe'
+        },
+        {
+          topic: 'MACRO OPERATIONAL',
+          question: 'PNB ₹11,400 Cr Root Cause?',
+          options: [
+            { label: 'A) SWIFT-CBS Gap', correct: true },
+            { label: 'B) Bond Crash', correct: false },
+            { label: 'C) IT Outage', correct: false }
+          ],
+          recap: 'SWIFT Not Linked To CBS → Unauthorized LoUs → Classic People + System Failure'
+        },
+        {
+          topic: 'TECH & MICRO OPS',
+          question: 'UCO ₹820 Cr Error Type?',
+          options: [
+            { label: 'A) Credit Risk', correct: false },
+            { label: 'B) Market Risk', correct: false },
+            { label: 'C) Operational Risk', correct: true }
+          ],
+          recap: 'UCO IMPS Glitch (Macro) • HDFC 15-Mo IT Ban • RBI Fines & KYC Lapses (Micro)'
+        },
+        {
+          topic: 'ICICI TURNAROUND',
+          question: 'First Line of Risk Defense?',
+          options: [
+            { label: 'A) External Audit', correct: false },
+            { label: 'B) RBI Rules', correct: false },
+            { label: 'C) Relationship Manager', correct: true }
+          ],
+          recap: 'Videocon Overhaul → Strict Underwriting → RM: Fair to Bank, Fair to Customer'
+        }
+      ];
+
+      let quizState = QUIZ_DATA.map(() => ({
+        answered: false,
+        revealedCorrect: false,
+        wrongIndices: new Set()
+      }));
+      let currentQuizIdx = 0; // 0..5 = Q1..Q6, 6 = ★ Recap
+
+      const quizTabBtns = Array.from(document.querySelectorAll('#quiz-tab-group .quiz-tab-btn'));
+      const quizPrevBtn = document.getElementById('quiz-prev-btn');
+      const quizNextBtn = document.getElementById('quiz-next-btn');
+      const revealAnswerBtn = document.getElementById('reveal-answer-btn');
+      const resetAllBtn = document.getElementById('reset-all-btn');
+
+      const quizQuestionView = document.getElementById('quiz-question-view');
+      const quizRecapView = document.getElementById('quiz-recap-view');
+      const qBadgeNum = document.getElementById('q-badge-num');
+      const qTopicPill = document.getElementById('q-topic-pill');
+      const qTitleBig = document.getElementById('q-title-big');
+      const qOptionsGrid = document.getElementById('q-options-grid');
+      const qRecapStrip = document.getElementById('q-recap-strip');
+
+      function renderQuiz(targetIdx) {
+        currentQuizIdx = Math.max(0, Math.min(6, targetIdx));
+
+        quizTabBtns.forEach((btn, idx) => {
+          btn.classList.toggle('is-active', idx === currentQuizIdx);
+          if (idx < 6) {
+            btn.classList.toggle('is-answered', quizState[idx].answered);
+          }
+        });
+
+        quizPrevBtn.disabled = currentQuizIdx === 0;
+        quizNextBtn.disabled = currentQuizIdx === 6;
+
+        if (currentQuizIdx === 6) {
+          quizQuestionView.classList.add('hidden');
+          quizRecapView.classList.remove('hidden');
+          return;
+        }
+
+        quizRecapView.classList.add('hidden');
+        quizQuestionView.classList.remove('hidden');
+
+        const item = QUIZ_DATA[currentQuizIdx];
+        const st = quizState[currentQuizIdx];
+
+        qBadgeNum.textContent = `Q${currentQuizIdx + 1} / 06`;
+        qTopicPill.textContent = item.topic;
+        qTitleBig.textContent = item.question;
+
+        qOptionsGrid.innerHTML = '';
+        item.options.forEach((opt, optIdx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'mcq-opt';
+
+          if (opt.correct && st.revealedCorrect) {
+            btn.classList.add('is-correct');
+          } else if (!opt.correct && st.wrongIndices.has(optIdx)) {
+            btn.classList.add('is-wrong');
+          }
+
+          const markChar = opt.correct ? '✓' : '✕';
+          btn.innerHTML = `<span>${opt.label}</span><span class="opt-mark">${markChar}</span>`;
+
+          btn.addEventListener('click', () => {
+            st.answered = true;
+            if (opt.correct) {
+              st.revealedCorrect = true;
+            } else {
+              st.wrongIndices.add(optIdx);
+            }
+            renderQuiz(currentQuizIdx);
+          });
+
+          qOptionsGrid.appendChild(btn);
+        });
+
+        if (st.answered) {
+          qRecapStrip.classList.add('is-unlocked');
+          qRecapStrip.innerHTML =
+            `<span class="recap-pill">KEY RECAP</span>` +
+            `<span class="recap-text">${item.recap}</span>`;
+        } else {
+          qRecapStrip.classList.remove('is-unlocked');
+          qRecapStrip.innerHTML =
+            `<span class="recap-placeholder">Select an option to unlock Key Recap</span>`;
+        }
+      }
+
+      quizTabBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          renderQuiz(parseInt(btn.dataset.qidx, 10));
+        });
+      });
+
+      quizPrevBtn.addEventListener('click', () => renderQuiz(currentQuizIdx - 1));
+      quizNextBtn.addEventListener('click', () => renderQuiz(currentQuizIdx + 1));
+
+      revealAnswerBtn.addEventListener('click', () => {
+        if (currentQuizIdx < 6) {
+          quizState[currentQuizIdx].answered = true;
+          quizState[currentQuizIdx].revealedCorrect = true;
+          renderQuiz(currentQuizIdx);
+        }
+      });
+
+      resetAllBtn.addEventListener('click', () => {
+        quizState = QUIZ_DATA.map(() => ({
+          answered: false,
+          revealedCorrect: false,
+          wrongIndices: new Set()
+        }));
+        renderQuiz(0);
+      });
+
+      /* ----------------------------------------------------------------------
+         6. KEYBOARD & TOUCH SWIPE NAVIGATION
+         ---------------------------------------------------------------------- */
+      document.addEventListener('keydown', (e) => {
+        const key = e.key;
+
+        if (key === 'Escape') {
+          if (svbVideo.isExpanded) {
+            svbVideo.toggleExpand(false);
+            return;
+          }
+          if (notesDrawer.classList.contains('is-open')) {
+            toggleNotes(true);
+            return;
+          }
+        }
+
+        if (key === 'n' || key === 'N') {
+          e.preventDefault();
+          toggleNotes();
+          return;
+        }
+
+        if (key === 'f' || key === 'F') {
+          e.preventDefault();
+          toggleBrowserFullscreen();
+          return;
+        }
+
+        if ((key === 'v' || key === 'V') && currentSlide === 2) {
+          e.preventDefault();
+          svbVideo.togglePlay();
+          return;
+        }
+
+        // Slide 6 Quiz Shortcuts: ↑ / ↓, Keys 1–6, and R or 7 for ★ Recap
+        if (currentSlide === 5) {
+          if (key === 'ArrowDown') {
+            e.preventDefault();
+            renderQuiz(currentQuizIdx + 1);
+            return;
+          }
+          if (key === 'ArrowUp') {
+            e.preventDefault();
+            renderQuiz(currentQuizIdx - 1);
+            return;
+          }
+          if (key >= '1' && key <= '6') {
+            e.preventDefault();
+            renderQuiz(parseInt(key, 10) - 1);
+            return;
+          }
+          if (key === 'r' || key === 'R' || key === '7') {
+            e.preventDefault();
+            renderQuiz(6);
+            return;
+          }
+        }
+
+        const activeTag = document.activeElement ? document.activeElement.tagName : '';
+        if (key === ' ' && activeTag === 'BUTTON') {
+          return;
+        }
+
+        if (svbVideo.isExpanded) return;
+
+        if (key === 'ArrowRight' || key === ' ' || key === 'PageDown') {
+          e.preventDefault();
+          goToSlide(currentSlide + 1);
+        } else if (key === 'ArrowLeft' || key === 'PageUp') {
+          e.preventDefault();
+          goToSlide(currentSlide - 1);
+        } else if (key === 'Home') {
+          e.preventDefault();
+          goToSlide(0);
+        } else if (key === 'End') {
+          e.preventDefault();
+          goToSlide(totalSlides - 1);
+        }
+      });
+
+      let touchStartX = 0;
+      let touchStartY = 0;
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        if (svbVideo.isExpanded) return;
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        const dy = e.changedTouches[0].screenY - touchStartY;
+        if (Math.abs(dx) > 54 && Math.abs(dx) > Math.abs(dy) * 1.25) {
+          if (dx < 0) goToSlide(currentSlide + 1);
+          else goToSlide(currentSlide - 1);
+        }
+      }, { passive: true });
+
+      /* ----------------------------------------------------------------------
+         7. INITIALIZE ON LOAD
+         ---------------------------------------------------------------------- */
+      window.onload = function () {
+        updateChrome();
+        updateNotesPanel();
+        highlightObjectiveAndHub(0);
+        renderQuiz(0);
+        svbVideo.resizeAndDraw();
+      };
+    })();
+  </script>
+</body>
+</html>
